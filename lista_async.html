@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
+</head>
+<body>
+    <header>
+        <h1>Users</h1>
+    </header>
+    <main>
+        <p>Lista de utilizadores:</p>
+        <ul></ul>
+    </main>
+    
+    <script>
+        const url_api = 'https://jsonplaceholder.typicode.com/users'
+        const ul = document.querySelector('ul') 
+
+        async function fetchUsers(url) {
+
+            const response = await fetch(url)
+            const data = await response.json()
+
+            ul.innerHTML = data.map(user => `<li>${user.name}</li>`).join("")
+        }
+
+        fetchUsers(url_api)
+
+    </script>
+</body>
+</html>
