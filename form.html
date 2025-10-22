@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo Fetch POST</title>
+
+</head>
+
+<body>
+    <header>
+        <h1>Registo</h1>
+    </header>
+
+    <main>
+        <p>Preenche o formulário e clica em "Enviar".</p>
+
+        <form id="formulario">
+            <input type="text" id="nome" placeholder="Nome" required>
+            <input type="email" id="email" placeholder="Email" required>
+            <button type="submit">Enviar</button>
+        </form>
+
+        <div id="mensagem"></div>
+    </main>
+
+
+    <script>
+        const form = document.getElementById('formulario');
+        const mensagem = document.getElementById('mensagem');
+
+        const url_post = 'https://jsonplaceholder.typicode.com/users';
+
+        form.addEventListener('submit', async () => {
+            event.preventDefault();
+
+            const name = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+
+            mensagem.textContent = "🔄 Enviando dados...";
+      
+            try {
+              const resposta = await fetch('https://jsonplaceholder.typicode.com/posts', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ nome, email })
+              });
+      
+              if (!resposta.ok) throw new Error('Erro ao enviar dados.');
+      
+              const dados = await resposta.json();
+      
+              mensagem.textContent = `✅ Dados enviados com sucesso! ID do registo: ${dados.id}`;
+            } catch (erro) {
+              mensagem.textContent = `❌ Ocorreu um erro: ${erro.message}`;
+            }
+        });
+
+    </script>
+</body>
+
+</html>
